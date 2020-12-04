@@ -8,15 +8,17 @@ public class Email {
     private String lastName;
     private String password;
     private String department;
-    private int mailboxCapacity;
+    private String email;
+    private int mailboxCapacity = 500;
     private int defaultPasswordLength = 10;
     private String alternateEmail;
+    private String companySuffix = "company.com";
 
     // Constructor to receive the first name and last name
-    public Email(String firstName, String lastName){
+    public Email(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        System.out.println("EMAIL CREATED: "+this.firstName+" "+this.lastName);
+        System.out.println("EMAIL CREATED: " + this.firstName + " " + this.lastName);
 
         // Call a method asking for the department - return the department
         this.department = setDepartment();
@@ -24,30 +26,35 @@ public class Email {
 
         // Call a method that returns a random password
         this.password = randomPassword(defaultPasswordLength);
-        System.out.println("Your password is: "+ this.password);
+        System.out.println("Your password is: " + this.password);
 
-        // 
+        // Combine elements to generate email
+        email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + department + "." + companySuffix;
+        System.out.println("Your email is: " + email);
 
     }
+
     // Ask for the department
-    private String setDepartment(){
+    private String setDepartment() {
         System.out.print("DEPARTMENT CODES\n1 for Sales\n2 for Development\n3 for Accounting\n0 for none\nEnter department code: ");
         Scanner in = new Scanner(System.in);
         int departmentChoice = in.nextInt();
-        if (departmentChoice == 1){
+        if (departmentChoice == 1) {
             return "sales";
-        } else if (departmentChoice == 2){
+        } else if (departmentChoice == 2) {
             return "dev";
         } else if (departmentChoice == 3) {
             return "acct";
-        } else { return "";}
+        } else {
+            return "";
+        }
     }
 
     // Generate a random password
     private String randomPassword(int length) {
         String passwordSet = "ABCDEFGHIJKKLMNOPQRSTUVWXYZ0123456789!@#$%";
         char[] password = new char[length];
-        for (int i = 0; i<length; i++){
+        for (int i = 0; i < length; i++) {
             int randomValue = (int) (Math.random() * passwordSet.length());
             password[i] = passwordSet.charAt(randomValue);
         }
@@ -55,8 +62,16 @@ public class Email {
     }
 
     // Set the mailbox capacity
+    public void setMailboxCapacity(int capacity){
+        this.mailboxCapacity = capacity;
+    }
 
     // Set the alternate email
-
+    public void setAlternateEmail(String alternateEmail){
+        this.alternateEmail = alternateEmail;
+    }
     // Change the password
+    public void changePassword(String password){
+        this.password = password;
+    }
 }
